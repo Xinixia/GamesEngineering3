@@ -5,9 +5,15 @@
 
 #include "Component.h"
 #include "Window.h"
+#include "C_Transform.h"
+#include "C_Drawable.h"
+#include "C_InstanceID.h"
 
 class Object {
 public:
+
+	Object();
+
 	//Awake is called when object created. Use to ensure
 	//required components are present
 	void Awake();
@@ -19,10 +25,13 @@ public:
 	void LateUpdate(float deltaTime);
 	void Draw(Window& window);
 
+	bool isQueuedForRemoval();
+	void queueForRemoval();
+
+	std::shared_ptr<C_Transform> transform;
+	std::shared_ptr<C_InstanceID> instanceID;
+
 	template <typename T> std::shared_ptr<T> AddComponent() {
-		//This ensures that we only try to add a class that derives from Component.
-		//This is tested at compile time.
-		static_assert(std::is_base_of<Component, T>::value, "T must derive from Component");
 
 		//Check that we don't already have a component of this type
 		for (auto& existingComponent : components) {
@@ -37,11 +46,14 @@ public:
 		std::shared_ptr<T> newComponent = std::make_shared<T>(this);
 		components.push_back(newComponent);
 
+		if (std::dynamic_pointer_cast<C_Drawable>(newComponent)) {
+			drawable = std::dynamic_pointer_cast<C_Drawable>(newComponent);
+		}
+
 		return newComponent;
 	};
 
 	template <typename T> std::shared_ptr<T> GetComponent() {
-		static_assert(std::is_base_of<Component, T>::value, "T must derive from Component");
 
 		//Check that we don't already have a component of this type
 		for (auto& existingComponent : components) {
@@ -53,8 +65,12 @@ public:
 		return nullptr;
 	};
 
+	std::shared_ptr<C_Drawable> GetDrawable();
+
 private:
 	std::vector<std::shared_ptr<Component>> components;
+	std::shared_ptr<C_Drawable> drawable;
+	bool queuedForRemoval;
 };
 
 #endif // !Object_h

@@ -4,10 +4,10 @@
 using namespace sf;
 using namespace std;
 
+Game game;
+
 int main()
 {
-    Game game;
-
     while (game.isRunning())
     {
         game.processInput();

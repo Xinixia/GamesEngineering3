@@ -3,13 +3,13 @@
 using namespace std;
 
 Game::Game()
-	: window("Game Engine Test")
+	: window("Density Experiment")
 {
 	std::shared_ptr<SceneSplashScreen> splashScreen =
-		std::make_shared<SceneSplashScreen>(workingDir, sceneStateMachine, window);
+		std::make_shared<SceneSplashScreen>(workingDir, sceneStateMachine, window, textureAllocator);
 
 	std::shared_ptr<SceneGame> gameScene =
-		std::make_shared<SceneGame>(workingDir);
+		std::make_shared<SceneGame>(workingDir, textureAllocator, window);
 
 	unsigned int splashScreenID = sceneStateMachine.Add(splashScreen);
 	unsigned int gameSceneID = sceneStateMachine.Add(gameScene);

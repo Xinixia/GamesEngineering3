@@ -1,12 +1,13 @@
 #include "Window.h"
 
-float windowWidth = 800.0f;
-float windowHeight = 800.0f;
+float windowWidth = 1280.0f;
+float windowHeight = 720.0f;
 
 Window::Window(const std::string& windowName)
-	: window(sf::VideoMode(windowWidth, windowHeight), windowName, sf::Style::Titlebar) {
+	: window(sf::VideoMode(windowWidth, windowHeight), windowName, sf::Style::Default) {
 
 	window.setVerticalSyncEnabled(true);
+	
 }
 
 void Window::Update() {
@@ -37,4 +38,25 @@ bool Window::isOpen() const {
 sf::Vector2u Window::getCentre() {
 	sf::Vector2u centre = sf::Vector2u(windowWidth / 2, windowHeight / 2);
 	return centre;
+}
+
+void Window::Draw(const sf::Vertex* vertices, std::size_t vertexCount, sf::PrimitiveType type) {
+	window.draw(vertices, vertexCount, type);
+}
+
+const sf::View& Window::GetView() const {
+	return window.getView();
+}
+
+void Window::SetView(const sf::View& view) {
+	window.setView(view);
+}
+
+sf::FloatRect Window::GetViewSpace() const {
+	const sf::View& view = GetView();
+	const sf::Vector2f& viewCenter = view.getCenter();
+	const sf::Vector2f& viewSize = view.getSize();
+	sf::Vector2f viewSizeHalf(viewSize.x * 0.5f, viewSize.y * 0.5f);
+	sf::FloatRect viewSpace(viewCenter - viewSizeHalf, viewSize);
+	return viewSpace;
 }

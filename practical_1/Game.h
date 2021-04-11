@@ -29,6 +29,8 @@ private:
 	float deltaTime;
 
 	SceneStateMachine sceneStateMachine;
+
+	ResourceAllocator<sf::Texture> textureAllocator;
 };
 
 #endif /* Game_h */

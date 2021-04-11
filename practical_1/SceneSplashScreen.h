@@ -5,10 +5,11 @@
 
 #include "SceneStateMachine.h"
 #include "WorkingDirectory.h"
+#include "ResourceAllocator.h"
 
 class SceneSplashScreen : public Scene {
 public:
-	SceneSplashScreen(WorkingDirectory& workingDir, SceneStateMachine& sceneStateMachine, Window& window);
+	SceneSplashScreen(WorkingDirectory& workingDir, SceneStateMachine& sceneStateMachine, Window& window, ResourceAllocator<sf::Texture>& textureAllocator);
 
 	void OnCreate() override;
 	void OnDestroy() override;
@@ -33,6 +34,8 @@ private:
 
 	//The state we want to transition to when this scenes time expires
 	unsigned int switchToScene;
+
+	ResourceAllocator<sf::Texture>& textureAllocator;
 };
 
 #endif // !SceneSplashScreen_h

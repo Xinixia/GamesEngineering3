@@ -13,7 +13,9 @@ public:
 		Right = 2,
 		Up = 3,
 		Down = 4,
-		Esc = 5
+		Esc = 5,
+		Q = 6,
+		E = 7
 	};
 
 	void Update();

@@ -14,10 +14,11 @@ public:
 
 	virtual void Update(float deltaTime) {};
 	virtual void LateUpdate(float deltaTime) {};
-	virtual void Draw(Window& window) {};
+
+	Object* owner;
 
 protected:
-	Object* owner;
+
 };
 
 #endif // !Component_h

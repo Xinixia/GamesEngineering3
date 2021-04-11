@@ -12,11 +12,16 @@ public:
 
 	void beginDraw();
 	void Draw(const sf::Drawable& drawable);
+	void Draw(const sf::Vertex* vertices, std::size_t vertexCount, sf::PrimitiveType type);
 	void endDraw();
 
 	bool isOpen() const;
 
 	sf::Vector2u getCentre();
+
+	const sf::View& GetView() const;
+	void SetView(const sf::View& view);
+	sf::FloatRect Window::GetViewSpace() const;
 
 private:
 	sf::RenderWindow window;
